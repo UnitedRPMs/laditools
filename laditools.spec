@@ -1,5 +1,5 @@
 %global commit 2946670cbc89f56f2e98675fa1815952665684c8
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:          laditools
@@ -8,7 +8,7 @@ Version:       1.1.0
 Release:       5%{?gver}%{dist}
 License:       GPLv3+
 URL:           https://github.com/alessio/laditools
-Source0:       https://github.com/alessio/laditools/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Source0:       https://github.com/alessio/laditools/archive/%{commit}/%{name}-%{version}-%{shortcommit0}.tar.gz
 
 BuildArch:     noarch
 
