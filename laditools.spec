@@ -5,7 +5,7 @@
 Name:          laditools
 Summary:       Set of tools to control and monitor LADI system
 Version:       1.1.0
-Release:       5%{?gver}%{dist}
+Release:       7%{?gver}%{dist}
 License:       GPLv3+
 URL:           https://github.com/alessio/laditools
 Source0:       https://github.com/alessio/laditools/archive/%{commit}/%{name}-%{version}-%{shortcommit0}.tar.gz
@@ -24,11 +24,9 @@ BuildRequires: python2-pip
 Requires:      a2jmidid
 Requires:      hicolor-icon-theme
 Requires:      jack-audio-connection-kit-dbus
-# Thanks to deprecations in python2, various modules will be died A bundle with pip; why not?
-#Requires:      python2-enum34
-#Requires:      python2-pyxdg
-Provides:      bundled(python2-enum34) = 1.1.6
-Provides:      bundled(python2-pyxdg) = 0.26
+# Thanks to deprecations in python2, various modules will be died, A bundle with pip; why not?
+Requires:      python2-enum34
+Requires:      python2-pyxdg
 
 
 %description
@@ -37,6 +35,31 @@ project to improve desktop integration and user workflow of Linux
 audio system based on JACK and ladish. Those tools take advantage of 
 the D-Bus interfaces recently added to JACK and ladish to ease the 
 configuration and use of those two great softwares.
+
+#----------
+
+%package -n     python2-enum34
+Version:	1.1.6
+Summary:        Python 3.4 Enum backported
+Url:		https://pypi.python.org/pypi/enum34
+
+%description -n python2-enum34
+An enumeration is a set of symbolic names (members) bound to unique, constant 
+values. Within an enumeration, the members can be compared by identity, and the 
+enumeration itself can be iterated over.
+
+#----------
+
+%package -n     python2-pyxdg
+Version:	0.26
+Summary:        Python library to access freedesktop.org standards
+Url:		https://freedesktop.org/Software/pyxdg
+Provides:	python2-xdg = %{version}
+
+%description -n python2-pyxdg
+PyXDG is a python library to access freedesktop.org standards.
+
+#----------
 
 %prep
 %autosetup -n %{name}-%{commit}
@@ -82,6 +105,8 @@ popd
 %{_mandir}/man1/%{name}.1.*
 
 # Thanks to deprecations in python2, various modules will be died A bundle with pip; why not?
+
+%files -n python2-enum34
 %{python2_sitelib}/enum/LICENSE
 %{python2_sitelib}/enum/README
 %{python2_sitelib}/enum/__init__.py
@@ -95,6 +120,7 @@ popd
 %{python2_sitelib}/enum34-1.1.6.dist-info/metadata.json
 %{python2_sitelib}/enum34-1.1.6.dist-info/top_level.txt
 
+%files -n python2-pyxdg
 %{python2_sitelib}/pyxdg-0.26.dist-info/DESCRIPTION.rst
 %{python2_sitelib}/pyxdg-0.26.dist-info/INSTALLER
 %{python2_sitelib}/pyxdg-0.26.dist-info/METADATA
@@ -143,8 +169,10 @@ popd
 %{python2_sitelib}/xdg/util.pyo
 
 
-
 %changelog
+
+* Tue Dec 10 2019 David Va <davidva AT tuta DOT io> - 1.1.0-7-git2946670
+- sub-packages enabled
 
 * Tue Dec 10 2019 David Va <davidva AT tuta DOT io> - 1.1.0-5-git2946670
 - Updated to current commit
